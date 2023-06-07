@@ -27,13 +27,15 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost','netmarketplace.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost','netmarktplace.onrender.com']
 _ALLOWED_HOST = config('ALLOWED_HOST')
 if _ALLOWED_HOST:
     ALLOWED_HOSTS.append(_ALLOWED_HOST)
 
 
 # Application definition
+
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
