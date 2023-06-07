@@ -33,10 +33,9 @@ if _ALLOWED_HOST:
     ALLOWED_HOSTS.append(_ALLOWED_HOST)
 
 
+
+
 # Application definition
-
-
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,6 +45,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'landing_page',
     'accounts',
+    'conversation',
+    'core',
+    'dashboard',
+    'item',
 
 ]
 
