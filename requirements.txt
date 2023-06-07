@@ -1,0 +1,12 @@
+Django
+asgiref
+sqlparse
+typing_extensions
+tzdata
+Pillow
+python-decouple
+whitenoise
+gunicorn
+psycopg2
+dj-database-url
+django-crispy-forms
