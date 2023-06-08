@@ -1,0 +1,21 @@
+{% extends 'landing_page/templates/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<main class="page registration-page">
+    <section class="clean-block clean-form dark">
+        <div class="container">
+            <!-- Your existing code within the 'content' block -->
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+<script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/js/baguetteBox.min.js' %}"></script>
+<script src="{% static 'assets/js/smoothproducts.min.js' %}"></script>
+<script src="{% static 'assets/js/theme.js' %}"></script>
+{% endblock %}
