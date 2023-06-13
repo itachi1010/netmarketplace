@@ -10,4 +10,4 @@ gunicorn
 psycopg2
 dj-database-url
 django-crispy-forms
-mimetypes
+mimetypes==0.1.5
