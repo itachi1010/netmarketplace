@@ -1,3 +1,4 @@
+{% load static %}
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top" style="z-index: 1000;">
     <div class="container">
@@ -17,17 +18,20 @@
 
                 {% if request.user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700" href="{% url 'conversation:inbox' %}">Inbox</a>
+                        <a class="nav-link text-lg font-semibold" href="{% url 'conversation:inbox' %}">Inbox</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700" href="{% url 'dashboard:index' %}">Dashboard</a>
+                        <a class="nav-link text-lg font-semibold" href="{% url 'dashboard:index' %}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-lg font-semibold" href="{% url 'logout' %}">Log Out</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700" href="{% url 'core:signup' %}">Sign up</a>
+                        <a class="nav-link text-lg font-semibold" href="{% url 'core:signup' %}">Sign up</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700" href="{% url 'core:login' %}">Log in</a>
+                        <a class="nav-link text-lg font-semibold" href="{% url 'core:login' %}">Log in</a>
                     </li>
                 {% endif %}
             </ul>

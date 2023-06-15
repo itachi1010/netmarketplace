@@ -7,7 +7,7 @@ INPUT_CLASSES = 'w-full py-4 px-6 rounded-xl border'
 class NewItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ('category', 'name', 'description', 'price', 'image',)
+        fields = ('category', 'name', 'description', 'price', 'image','full_description','full_description_photo',)
         widgets = {
             'category': forms.Select(attrs={
                 'class': INPUT_CLASSES
@@ -23,13 +23,20 @@ class NewItemForm(forms.ModelForm):
             }),
             'image': forms.FileInput(attrs={
                 'class': INPUT_CLASSES
-            })
+            }),
+            'full_description': forms.Textarea(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'full_description_photo': forms.FileInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            
         }
 
 class EditItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ('name', 'description', 'price', 'image', 'is_sold')
+        fields = ('name', 'description', 'price', 'image', 'is_sold','full_description','full_description_photo',)
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': INPUT_CLASSES
@@ -42,5 +49,11 @@ class EditItemForm(forms.ModelForm):
             }),
             'image': forms.FileInput(attrs={
                 'class': INPUT_CLASSES
-            })
+            }),
+            'full_description': forms.Textarea(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'full_description_photo': forms.FileInput(attrs={
+                'class': INPUT_CLASSES
+            }),
         }

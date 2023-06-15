@@ -11,6 +11,9 @@ class Category(models.Model):
     def __str__(self):
         return str(self.name)
 
+from django.db import models
+from django.contrib.auth.models import User
+
 class Item(models.Model):
     category = models.ForeignKey(Category, related_name='items', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
@@ -20,6 +23,10 @@ class Item(models.Model):
     is_sold = models.BooleanField(default=False)
     created_by = models.ForeignKey(User, related_name='items', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    rating = models.FloatField(default=0.0)
+    full_description = models.TextField(blank=True, null=True)  # New field for full description
+    full_description_photo = models.ImageField(upload_to='media/', blank=True, null=True)  # New field for full description photo
     
     def __str__(self):
         return str(self.name)
+

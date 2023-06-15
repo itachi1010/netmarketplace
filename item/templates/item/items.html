@@ -1,52 +1,108 @@
 {% extends 'core/base.html' %}
 
+{% load static %}
+
+
 {% block title %}Items{% endblock %}
 
 {% block content %}
-    <div class="pb-6 grid grid-cols-4 gap-4 bg-gray-100">
-        <div class="col-span-1">
-            <form method="get" action="{% url 'item:items' %}">
-                <input name="query" class="w-full py-4 px-6 border rounded-xl" type="text" value="{{ query }}" placeholder="Find a bike, a chair or car...">
+    <div class="pb-6">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <form method="get" action="{% url 'item:items' %}">
+                        <div class="form-group">
+                            <input name="query" class="form-control" type="text" value="{{ query }}" placeholder="Find a bike, a chair or car...">
+                        </div>
 
-                <button class="btn btn-primary" type="button">Search</button>
-            </form>
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </form>
 
-            <hr class="my-6">
+                    <hr class="my-4">
 
-            <p class="font-semibold">Categories</p>
+                    <p class="font-weight-bold">Categories</p>
 
-            <ul>
-                {% for category in categories %}
-                    <li class="py-2 px-2 rounded-xl{% if category.id == category_id %} bg-gray-200{% endif %}">
-                        <a href="{% url 'item:items' %}?query={{ query }}&category={{ category.id }}">{{ category.name }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
+                    <ul class="list-unstyled">
+                        {% for category in categories %}
+                            <li class="py-2 px-2{% if category.id == category_id %} bg-gray-200{% endif %}">
+                                <a href="{% url 'item:items' %}?query={{ query }}&category={{ category.id }}">{{ category.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
 
-            <hr class="my-6">
+                    <hr class="my-4">
 
-            <p class="font-semibold">Clear filters</p>
+                    <p class="font-weight-bold">Clear filters</p>
 
-            <ul>
-                <li><a href="{% url 'item:items' %}" class="mt-2 py-4 px-8 inline-block bg-yellow-500 text-lg rounded-xl text-white">Clear</a>
-        </div>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="{% url 'item:items' %}" class="mt-2 py-4 px-8 btn btn-warning btn-lg btn-block text-white">Clear</a>
+                        </li>
+                    </ul>
+                </div>
 
-        <div class="col-span-3">
-            <div class="grid grid-cols-3 gap-3">
-                {% for item in items %}
-                    <div>
-                        <a href="{% url 'item:detail' item.id %}">
-                            <div>
-                                <img src="{{ item.image.url }}" class="rounded-t-xl">
+
+
+                <section class="clean-block slider dark">
+                    <div class="container">
+                        <div class="block-heading">
+                            <h2 class="text-info">Products</h2>
+                            <p>These are some of the products</p>
+                        </div>
+                        <div id="carousel-1" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                {% for item in items %}
+                                <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                                    <a href="{% url 'item:detail' item.id %}">
+                                        <div class="card">
+                                            <img src="{{ item.image.url }}" class="card-img-top rounded-top-xl" alt="{{ item.name }}">
+                                            <div class="card-body">
+                                                <h2 class="card-title">{{ item.name }}</h2>
+                                                <p class="card-text">Price: {{ item.price }}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                {% endfor %}
                             </div>
-    
-                            <div class="p-6 bg-white rounded-b-xl">
-                                <h2 class="text-2xl">{{ item.name }}</h2>
-                                <p class="text-gray-500">Price: {{ item.price }}</p>
-                            </div>
-                        </a>
+                            <a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carousel-1" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                            <ol class="carousel-indicators">
+                                {% for item in items %}
+                                <li data-target="#carousel-1" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
+                                {% endfor %}
+                            </ol>
+                        </div>
                     </div>
-                {% endfor %}
+                </section>
+                
+        
+
+
+
+                <div class="col-md-9">
+                    <div class="row">
+                        {% for item in items %}
+                            <div class="col-md-4">
+                                <a href="{% url 'item:detail' item.id %}">
+                                    <div class="card mb-4">
+                                        <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
+                                        <div class="card-body">
+                                            <h2 class="card-title h5">{{ item.name }}</h2>
+                                            <p class="card-text">Price: {{ item.price }}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
