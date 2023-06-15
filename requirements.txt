@@ -10,7 +10,6 @@ gunicorn
 psycopg2
 dj-database-url
 django-crispy-forms
-mimetype
 cassidy
 enumb
 expo
