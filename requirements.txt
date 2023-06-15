@@ -10,7 +10,4 @@ gunicorn
 psycopg2
 dj-database-url
 django-crispy-forms
-cassidy
-enumb
-expo
-setuptools
+
