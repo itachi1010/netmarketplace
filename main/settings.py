@@ -33,10 +33,9 @@ if _ALLOWED_HOST:
     ALLOWED_HOSTS.append(_ALLOWED_HOST)
 
 
+
+
 # Application definition
-
-
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -44,28 +43,33 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'landing_page',
     'accounts',
+    'conversation',
+    'core',
+    'dashboard',
+    'item',
 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'main.urls'
 
+#'landing_page/templates', BASE_DIR / "templates"
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['landing_page/templates', BASE_DIR / "templates"],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,9 +134,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
    BASE_DIR / 'static'
@@ -141,6 +145,28 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'    
 
 MEDIA_ROOT = BASE_DIR / 'media'
+
+#i added this 
+# WhiteNoise configuration
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Serve media files with WhiteNoise as well
+import mimetypes
+mimetypes.add_type("application/javascript", ".js", True)
+WHITENOISE_MIMETYPES = (
+    (".png", "image/png"),
+    (".jpg", "image/jpeg"),
+    (".jpeg", "image/jpeg"),
+    (".svg", "image/svg+xml"),
+    (".gif", "image/gif"),
+    (".webp", "image/webp"),
+    (".mp4", "video/mp4"),
+    (".webm", "video/webm"),
+    (".ogv", "video/ogg"),
+    (".css", "text/css"),
+    (".js", "application/javascript"),
+)
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

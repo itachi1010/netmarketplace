@@ -1,0 +1,149 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+        <div class="card mb-4">
+            <div class="rating">
+                <img src="/static/assets/img/star.svg">
+                <img src="/static/assets/img/star.svg">
+                <img src="/static/assets/img/star.svg">
+                <img src="/static/assets/img/star-half-empty.svg">
+                <img src="/static/assets/img/star-empty.svg">
+            </div>
+
+            <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
+            <div class="card-body">
+                <h1 class="mb-6 text-3xl">{{ item.name }}</h1>
+                <p class="text-gray-500"><strong>Price: </strong>{{ item.price }}</p>
+                <p class="text-gray-500"><strong>Seller: </strong>{{ item.created_by.username }}</p>
+
+                {% if item.description %}
+                    <p class="text-gray-700">
+                        <strong class="text-gray-500">Description:</strong><br>
+                        {{ item.description }}
+                    </p>
+                {% endif %}
+
+                {% if request.user == item.created_by %}
+                    <div class="mt-6 p-6 bg-white rounded-xl">
+                        <p>This is your item!</p>
+                        <a href="{% url 'item:edit' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-blue rounded-xl">Edit</a>
+                        <a href="{% url 'item:delete' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-blue rounded-xl">Delete</a>
+                    </div>
+                {% else %}  
+                    <a href="{% url 'conversation:new' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-blue rounded-xl hover:bg-teal-700">Contact seller</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="product-info">
+            <div>
+                <ul class="nav nav-tabs" role="tablist" id="myTab">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" role="tab" data-toggle="tab" id="description-tab" href="#description">Full Description</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" role="tab" data-toggle="tab" id="specifications-tabs" href="#specifications">Specifications</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" role="tab" data-toggle="tab" id="reviews-tab" href="#reviews">Reviews</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" role="tab" data-toggle="tab" id="related-items-tab" href="#related-items">Related Items</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active description" role="tabpanel" id="description">
+                        {% if item.full_description == null %}
+                        <p>{{ item.full_description }}</p>
+                        {% endif %}
+                        {% if item.full_description_photo %}
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <figure class="figure">
+                                        <img class="img-fluid figure-img" src="{{ item.full_description_photo.url }}" alt="Full Description Photo">
+                                    </figure>                                        
+                                </div>
+                                <div class="col-md-7">
+                                    <h4>{{item.name}}</h4>
+                                    <br>
+                                    <h5>{{item.category}}</h5>
+                                    <br>
+                                    <p>{{ item.full_description }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="tab-pane fade specifications" role="tabpanel" id="specifications">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td class="stat">Display</td>
+                                        <td>5.2"</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="stat">Camera</td>
+                                        <td>12MP</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="stat">RAM</td>
+                                        <td>4GB</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="stat">OS</td>
+                                        <td>iOS</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" role="tabpanel" id="reviews">
+                        <div class="reviews">
+                            <div class="review-item">
+                                <div class="rating">
+                                    <img src="{% static 'assets/img/star.svg' %}">
+                                    <img src="{% static 'assets/img/star.svg' %}">
+                                    <img src="{% static 'assets/img/star.svg' %}">
+                                    <img src="{% static 'assets/img/star.svg' %}">
+                                    <img src="{% static 'assets/img/star-empty.svg' %}">
+                                </div>
+                                <h4>Incredible product</h4>
+                                <span class="text-muted"><a href="#">John Smith</a>, 20 Jan 2018</span>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue nunc, pretium at augue at, convallis pellentesque ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" role="tabpanel" id="related-items">
+
+                        <div class="row">
+                            {% for related_item in related_items %}
+                                <div class="col-md-4">
+                                    <a href="{% url 'item:detail' related_item.id %}">
+                                        <div class="card mb-4">
+                                            <img src="{{ related_item.image.url }}" class="card-img-top" alt="{{ related_item.name }}">
+                                            <div class="card-body">
+                                                <h2 class="card-title h5">{{ related_item.name }}</h2>
+                                                <p class="card-text">Price: {{ related_item.price }}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
