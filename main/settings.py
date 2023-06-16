@@ -141,7 +141,6 @@ STATIC_ROOT =   '/opt/render/project/src/static'
 
 
 STATICFILES_DIRS = [
-   '/opt/render/project/src/static',
    BASE_DIR / 'static',
 ]
 
