@@ -15,26 +15,10 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls')),
     path('inbox/', include('conversation.urls')),
     path('admin/', admin.site.urls),
-    path("accounts/", include("accounts.urls")),  # new
-    path('accounts/', include("django.contrib.auth.urls")),
-    
-]
-
-
-'''
-these are for netlodge 
-urlpatterns = [
     path('core/', include('core.urls')),
-    path('admin/', admin.site.urls),
-    path('', include('landing_page.urls', namespace='landing_page')),
-    path("accounts/", include("accounts.urls")),  # new
-    path('accounts/', include("django.contrib.auth.urls")),
-    path('items/', include('item.urls')),
-    path('dashboard/', include('dashboard.urls')),
-    path('inbox/', include('conversation.urls')),
-    #path('', TemplateView.as_view(template_name='index.html'), name='index'),
 ]
-'''
+
+
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
@@ -42,7 +26,9 @@ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if not settings.DEBUG:
     urlpatterns += [
         re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+        re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
     ]
+
 
 
 
