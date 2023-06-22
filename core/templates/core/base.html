@@ -1,0 +1,58 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Home Netmarketplace</title>
+    <link rel="stylesheet" href="https://bennymarketplacebucket.s3.amazonaws.com/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i&amp;display=swap">
+    <link rel="stylesheet" href="https://bennymarketplacebucket.s3.amazonaws.com/assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="https://bennymarketplacebucket.s3.amazonaws.com/assets/css/baguetteBox.min.css">
+    <link rel="stylesheet" href="https://bennymarketplacebucket.s3.amazonaws.com/assets/css/smoothproducts.css">
+
+    <style>
+        body {
+            background-color: #333333;
+        }
+
+        .clean-block.clean-form.dark {
+            background-color: #666666;
+        }
+
+        .page-content {
+            padding-top: 70px;
+            color: grey;
+        }
+
+        a {
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'includes/navbar.html' %}
+
+    <main class="page landing-page">
+        <section class="clean-block clean-form dark">
+            <div class="container">
+                    {% block content %}
+                    {% endblock %}
+            </div>
+        </section>
+    </main>
+
+    {% include 'includes/footer.html' %}
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://bennymarketplacebucket.s3.amazonaws.com/assets/js/baguetteBox.min.js"></script>
+    <script src="https://bennymarketplacebucket.s3.amazonaws.com/assets/js/smoothproducts.min.js"></script>
+    <script src="https://bennymarketplacebucket.s3.amazonaws.com/assets/js/theme.js"></script>
+
+</body>
+</html>

@@ -33,39 +33,45 @@ if _ALLOWED_HOST:
     ALLOWED_HOSTS.append(_ALLOWED_HOST)
 
 
+
+
 # Application definition
-
-
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    'landing_page',
+    'storages',
     'accounts',
+    'conversation',
+    'core.apps.CoreConfig',
+    'dashboard',
+    'item',
 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'main.urls'
 
+#'landing_page/templates', BASE_DIR / "templates"
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['landing_page/templates', BASE_DIR / "templates"],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,17 +136,42 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+#STATIC_URL = 'static/'
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 STATICFILES_DIRS = [
    BASE_DIR / 'static'
 ]
 
-MEDIA_URL = '/media/'    
+#MEDIA_URL = '/media/'    
 
-MEDIA_ROOT = BASE_DIR / 'media'
+#MEDIA_ROOT = 'media/'
+
+#i added this 
+# WhiteNoise configuration
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+
+# Serve media files with WhiteNoise as well
+import mimetypes
+mimetypes.add_type("application/javascript", ".js", True)
+WHITENOISE_MIMETYPES = (
+    (".png", "image/png"),
+    (".jpg", "image/jpeg"),
+    (".jpeg", "image/jpeg"),
+    (".svg", "image/svg+xml"),
+    (".gif", "image/gif"),
+    (".webp", "image/webp"),
+    (".mp4", "video/mp4"),
+    (".webm", "video/webm"),
+    (".ogv", "video/ogg"),
+    (".css", "text/css"),
+    (".js", "application/javascript"),
+)
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -156,3 +187,25 @@ LOGOUT_REDIRECT_URL = "/"  # new
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+
+
+# Use Amazon S3 for media files
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID = config('aws_access_key_id')
+AWS_S3_REGION_NAME = config('aws_region_name')
+AWS_S3_SIGNATURE_NAME = 's3v4'
+AWS_SECRET_ACCESS_KEY = config('aws_secret_access_key')
+# Force HTTPS for generated URLs
+AWS_S3_SECURE_URLS = True
+AWS_DEFAULT_ACL = None
+AWS_S3_VERITY = True
+AWS_STORAGE_BUCKET_NAME = config('bucket_name')
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+
+STATIC_LOCATION = 'assets'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
